@@ -94,6 +94,8 @@ class Tello:
                  host=TELLO_IP,
                  retry_count=RETRY_COUNT):
 
+        print("using local DJI Tello Library")
+
         global threads_initialized, client_socket, drones
 
         self.address = (host, Tello.CONTROL_UDP_PORT)
@@ -592,6 +594,22 @@ class Tello:
         """
         self.send_control_command("streamon")
         self.stream_on = True
+
+        
+    def streamon_front(self):
+        """
+        an extension to the wrapper to get front camera feed
+        """
+        self.streamon()
+        self.send_control_command("downvision 0")
+
+
+    def streamon_bottom(self):
+        """
+        an extension to the wrapper to get bottom camera feed
+        """
+        self.streamon()
+        self.send_control_command("downvision 1")
 
     def streamoff(self):
         """Turn off video streaming.
